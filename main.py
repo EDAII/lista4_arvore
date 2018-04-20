@@ -1,99 +1,45 @@
+from redblacktree import RedBlackTree
+import os
 
-# colors
-BLACK = 'BLACK'
-RED = 'RED'
-NIL = 'NIL'
+def print_tree(node):
+    """Ascending order"""
+    if node.value == None :
+        return
+    print_tree(node.right)
+    print(node)
+    print_tree(node.left)
 
-class Node:
-    def __init__(self, color=None, value=None, right=None, left=None, parent=None):
-        self.color = color
-        self.value = value
-        self.right = right
-        self.left = left
-        self.parent = parent
 
-    def parent(self):
-        return self.parent
+try:
+    tree = RedBlackTree()
+except:
+    print('erro')
+number = 1
+while(number):
+    print("Digite:\n1- Para adicionar a árvore.\n2- Para remover da árvore\n0- Para sair\n")
+    number = int(input())
+    if number == 1:
+        print("Digite o valor que queira adicionar.")
+        value = int(input())
+        tree.add(value)
+        root = tree.root
+        print_tree(root)
 
-    def grand_parent(self):
-        p = self.parent()
-        if (p == None):
-            return None # no parents
-        return self.parent()
-    
-    def sibling(self):
-        p = self.parent()
-        if p == None:
-            return None
-        if n == p.left:
-            return p.right
+    elif number == 2:
+        print("Digite o valor que deseje remover.")
+        value = int(input())
+        result = tree.remove(value)
+        if result:
+            print("Valor: {} retirado com sucesso.".format(value))
+            root = tree.root
+            print_tree(root)
         else:
-            return p.left
+            print("Valor não se encontra na árvore.")
 
-    def uncle(self):
-        p = self.parent()
-        g = self.grand_parent()
-        if g == None:
-            return None
-        return sibling(p)
-
-    def rotate_left(n):
-        new = n.right
-        n.right = new.left
-        new.left = n
-        new.parent = n.parent
-        n.parent = new
-        return new
-    
-    def rotate_right(n):
-        new = n.left
-        n.left = new.right
-        new.right = n
-        new.parent = parent
-        n.parent = new
-        return new
-    
-    def insert_case_1(n):
-        if parent(n) == None:
-            n.color = BLACK
-        else:
-            insert_case_2(n)
-
-    def insert_case_2(n):
-        if n.parent.color == BLACK:
-            return
-        else:
-            insert_case_3(n)
-
-    def insert_case_3(n):
-        u = uncle(n)
-        if (u != None) and (u.color == RED):
-            n.parent.color = BLACK
-            u.color = BLACK
-            g = grand_parent(n)
-            g.color = RED
-            insert_case_1(g)
-        else:
-            insert_case_4(n)
-
-    def insert_case_4(n):
-        g = grand_parent(n)
-        if (n == n.parent.right) and (n.parent == g.left):
-            rotate_left(n.parent)
-            n = n.left
-        elif (n == n.parent.left) and (n.parent == g.right):
-            rotate_right(n.parent)
-            n = n.right
-        insert_case_5(n)
-
-    def insert_case_5(n):
-        g = grand_parent(n)
-
-        n.parent.color = BLACK
-        g.color = RED
-        if (n == n.parent.left) and (n.parent == g.left):
-            rotate_right(n)
-        else:
-            rotate_left(n)
-
-
+    print("Aperte enter para continuar!!!")
+    try:
+        input()
+    except:
+        print("Você está no python2 por favor aperte enter de novo")
+        raw_input()
+    os.system('clear')
